@@ -1,15 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { FieldName } from '../../constants';
+import React, { useCallback, useState } from 'react';
+import { useSelector } from 'react-redux';
 
-const MOCK_DATA = [
-  {
-    [FieldName.FirstName]: 'Kiryl',
-    [FieldName.LastName]: 'Henets',
-    [FieldName.Email]: 'test@example.com',
-    [FieldName.BirthDate]: '1990-10-08',
-  },
-];
+import Pagination from './Pagination';
+
+import { selectCustomers } from '../../selectors/customers';
+import { FieldName } from '../../constants';
 
 const COLUMNS = [
   {
@@ -30,30 +25,48 @@ const COLUMNS = [
   },
 ];
 
+const ITEMS_PER_PAGE = 2;
+
 const DataTable = () => {
+  const customers = useSelector(selectCustomers);
+
+  const [itemOffset, setItemOffset] = useState(0);
+
+  const items = customers.slice(itemOffset, itemOffset + ITEMS_PER_PAGE);
+  const pagesCount = Math.ceil(customers.length / ITEMS_PER_PAGE);
+
+  const handlePageChange = useCallback(
+    (evt) => {
+      console.log('🚀 ~ file: DataTable.jsx:70 ~ DataTable ~ evt', evt);
+      const newOffset = (evt.selected * ITEMS_PER_PAGE) % customers.length;
+      setItemOffset(newOffset);
+    },
+    [customers],
+  );
+
   return (
-    <table>
-      <thead>
-        <tr>
-          {COLUMNS.map(({ name, key }) => (
-            <th key={key}>{name}</th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {MOCK_DATA.map((item) => (
-          <tr key={item[FieldName.Email]}>
-            {COLUMNS.map(({ key }) => (
-              <td key={key}>{item[key]}</td>
+    <div>
+      <table>
+        <thead>
+          <tr>
+            {COLUMNS.map(({ name, key }) => (
+              <th key={key}>{name}</th>
             ))}
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {items.map((item) => (
+            <tr key={item[FieldName.Email]}>
+              {COLUMNS.map(({ key }) => (
+                <td key={key}>{item[key]}</td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <Pagination onPageChange={handlePageChange} pagesCount={pagesCount} />
+    </div>
   );
 };
-
-DataTable.propTypes = {};
-DataTable.defaultProps = {};
 
 export default DataTable;

@@ -1,6 +1,7 @@
 import { useCallback, useRef, useState } from 'react';
-import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 import Validator from 'simple-react-validator';
+import { addCustomer } from '../../actions/customers';
 
 import { FieldName } from '../../constants';
 
@@ -18,7 +19,7 @@ const DEFAULT_FORM_DATA = {
   [FieldName.BirthDate]: '',
 };
 
-const Form = ({ onSubmit }) => {
+const Form = () => {
   const validatorRef = useRef(
     new Validator({
       element: (message) => <p className="form__error">{message}</p>,
@@ -26,6 +27,8 @@ const Form = ({ onSubmit }) => {
   );
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
   const [, setIsError] = useState(false);
+
+  const dispatch = useDispatch();
 
   const handleFieldChange = useCallback(
     (name) => (evt) => {
@@ -38,14 +41,14 @@ const Form = ({ onSubmit }) => {
     (evt) => {
       evt.preventDefault();
       if (validatorRef.current.allValid()) {
-        onSubmit(formData);
+        dispatch(addCustomer(formData));
         setFormData(DEFAULT_FORM_DATA);
       } else {
         validatorRef.current.showMessages();
         setIsError(true);
       }
     },
-    [formData, onSubmit],
+    [formData, dispatch],
   );
 
   return (
@@ -131,10 +134,6 @@ const Form = ({ onSubmit }) => {
       </button>
     </form>
   );
-};
-
-Form.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
 };
 
 export default Form;
