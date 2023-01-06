@@ -1,4 +1,3 @@
-import './App.css';
 import Form from '../components/Form';
 import DataTable from '../components/DataTable';
 

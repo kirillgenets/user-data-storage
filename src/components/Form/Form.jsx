@@ -1,8 +1,9 @@
 import { useCallback, useRef, useState } from 'react';
+import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import Validator from 'simple-react-validator';
-import { addCustomer } from '../../actions/customers';
 
+import { addCustomer } from '../../actions/customers';
 import { FieldName } from '../../constants';
 
 const VALIDATION_RULES = {
@@ -19,7 +20,7 @@ const DEFAULT_FORM_DATA = {
   [FieldName.BirthDate]: '',
 };
 
-const Form = () => {
+const Form = ({ validateOnChange }) => {
   const validatorRef = useRef(
     new Validator({
       element: (message) => <p className="form__error">{message}</p>,
@@ -33,8 +34,9 @@ const Form = () => {
   const handleFieldChange = useCallback(
     (name) => (evt) => {
       setFormData((prevFormData) => ({ ...prevFormData, [name]: evt.target.value }));
+      validateOnChange && validatorRef.current.showMessages();
     },
-    [],
+    [validateOnChange],
   );
 
   const handleSubmit = useCallback(
@@ -53,7 +55,7 @@ const Form = () => {
 
   return (
     <form action="#" className="form" onSubmit={handleSubmit}>
-      <div className="form__fieldset">
+      <div className="form__field">
         <label htmlFor={FieldName.FirstName} className="form__label">
           First name:
         </label>
@@ -72,7 +74,7 @@ const Form = () => {
           VALIDATION_RULES[FieldName.FirstName],
         )}
       </div>
-      <div className="form__fieldset">
+      <div className="form__field">
         <label htmlFor={FieldName.LastName} className="form__label">
           Last name:
         </label>
@@ -91,7 +93,7 @@ const Form = () => {
           VALIDATION_RULES[FieldName.LastName],
         )}
       </div>
-      <div className="form__fieldset">
+      <div className="form__field">
         <label htmlFor={FieldName.Email} className="form__label">
           Email:
         </label>
@@ -110,7 +112,7 @@ const Form = () => {
           VALIDATION_RULES[FieldName.Email],
         )}
       </div>
-      <div className="form__fieldset">
+      <div className="form__field">
         <label htmlFor={FieldName.BirthDate} className="form__label">
           Date of birth:
         </label>
@@ -134,6 +136,14 @@ const Form = () => {
       </button>
     </form>
   );
+};
+
+Form.propTypes = {
+  validateOnChange: PropTypes.bool,
+};
+
+Form.defaultProps = {
+  validateOnChange: false,
 };
 
 export default Form;

@@ -3,35 +3,15 @@ import { useSelector, useDispatch } from 'react-redux';
 import Modal from 'react-modal';
 
 import Pagination from '../Pagination';
+import ConfirmationModal from './ConfirmationModal';
 
 import { selectCustomers } from '../../selectors/customers';
+import { removeCustomer } from '../../actions/customers';
 import { FieldName } from '../../constants';
+import { COLUMNS, ITEMS_PER_PAGE } from './constants';
 import filterData from './utils/filterData';
 
 import './style.css';
-import ConfirmationModal from './ConfirmationModal';
-import { removeCustomer } from '../../actions/customers';
-
-const COLUMNS = [
-  {
-    key: FieldName.FirstName,
-    name: 'First name',
-  },
-  {
-    key: FieldName.LastName,
-    name: 'Last name',
-  },
-  {
-    key: FieldName.Email,
-    name: 'E-Mail',
-  },
-  {
-    key: FieldName.BirthDate,
-    name: 'Date of birth',
-  },
-];
-
-const ITEMS_PER_PAGE = 2;
 
 Modal.setAppElement('#root');
 
@@ -75,7 +55,7 @@ const DataTable = () => {
     setItemToDelete(null);
   }, [dispatch, itemToDelete]);
 
-  return (
+  return items.length > 0 ? (
     <div className="data-table">
       <input
         type="search"
@@ -112,7 +92,7 @@ const DataTable = () => {
         <ConfirmationModal onSubmit={handleDeleteSubmit} onCancel={handleDeleteCancel} />
       )}
     </div>
-  );
+  ) : null;
 };
 
 export default DataTable;

@@ -1,4 +1,8 @@
-import { configure } from 'enzyme';
-import EnzymeAdapter from 'enzyme-adapter-react-16';
+import Enzyme from 'enzyme';
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 
-configure({ adapter: new EnzymeAdapter() });
+Enzyme.configure({ adapter: new Adapter() });
+
+const root = document.createElement('div');
+root.id = 'root';
+document.body.append(root);
