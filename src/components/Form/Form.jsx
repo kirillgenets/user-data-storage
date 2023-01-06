@@ -2,12 +2,7 @@ import { useCallback, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import Validator from 'simple-react-validator';
 
-const FieldName = {
-  FirstName: 'firstName',
-  LastName: 'lastName',
-  Email: 'email',
-  BirthDate: 'birthDate',
-};
+import { FieldName } from '../../constants';
 
 const VALIDATION_RULES = {
   [FieldName.FirstName]: 'required|alpha_space',
