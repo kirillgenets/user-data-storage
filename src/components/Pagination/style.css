@@ -1,0 +1,17 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+
+  list-style: none;
+}
+
+.pagination__item a {
+  color: '#4f4f4f';
+
+  cursor: pointer;
+}
+
+.pagination__item a:hover {
+  color: #bababa;
+}

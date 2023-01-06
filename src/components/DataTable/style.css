@@ -1,0 +1,37 @@
+.data-table {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  width: 80%;
+  margin: 0 auto;
+}
+
+.data-table__search {
+  width: 30%;
+}
+
+.data-table__table {
+  border-collapse: collapse;
+}
+
+.data-table__row {
+  border-bottom: 1px solid #ececec;
+}
+
+.data-table__row--head {
+  border-color: #a1a1a1;
+}
+
+.data-table__confirmation {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.data-table__confirmation-buttons {
+  display: flex;
+  gap: 10px;
+}
