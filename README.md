@@ -1,4 +1,19 @@
-# Getting Started with Create React App
+# User Data Storage
+
+A simple SPA that allows to collect and store data from the user input.
+
+## Installing dependencies
+
+Before using the app you need to install the dependencies using `npm` or `yarn`:
+
+```
+npm i
+```
+```
+yarn
+```
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
