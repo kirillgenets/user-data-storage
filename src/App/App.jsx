@@ -1,9 +1,11 @@
 import Form from '../components/Form';
 import DataTable from '../components/DataTable';
 
+import './style.css';
+
 const App = () => {
   return (
-    <div className="App">
+    <div className="app">
       <Form />
       <DataTable />
     </div>

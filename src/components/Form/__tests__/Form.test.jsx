@@ -53,7 +53,7 @@ describe('Form', () => {
     expect(actions).toEqual([]);
   });
 
-  it('should call the @customers/addCustomer action on submit', () => {
+  it('should call the @customers/add-customer action on submit', () => {
     const store = mockStore({});
     const component = mount(
       <Provider store={store}>

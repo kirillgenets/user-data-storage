@@ -5,6 +5,8 @@ import Validator from 'simple-react-validator';
 import { addCustomer } from '../../actions/customers';
 import { FieldName } from '../../constants';
 
+import './style.css';
+
 const VALIDATION_RULES = {
   [FieldName.FirstName]: 'required|alpha_space',
   [FieldName.LastName]: 'required|alpha_space',
