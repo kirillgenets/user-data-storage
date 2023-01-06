@@ -45,6 +45,8 @@ const Form = () => {
       if (validatorRef.current.allValid()) {
         dispatch(addCustomer(formData));
         setFormData(DEFAULT_FORM_DATA);
+        validatorRef.current.hideMessages();
+        setIsError(false);
       } else {
         validatorRef.current.showMessages();
         setIsError(true);
