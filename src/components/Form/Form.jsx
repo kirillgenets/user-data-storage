@@ -1,5 +1,4 @@
 import { useCallback, useRef, useState } from 'react';
-import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import Validator from 'simple-react-validator';
 
@@ -20,7 +19,7 @@ const DEFAULT_FORM_DATA = {
   [FieldName.BirthDate]: '',
 };
 
-const Form = ({ validateOnChange }) => {
+const Form = () => {
   const validatorRef = useRef(
     new Validator({
       element: (message) => <p className="form__error">{message}</p>,
@@ -34,9 +33,8 @@ const Form = ({ validateOnChange }) => {
   const handleFieldChange = useCallback(
     (name) => (evt) => {
       setFormData((prevFormData) => ({ ...prevFormData, [name]: evt.target.value }));
-      validateOnChange && validatorRef.current.showMessages();
     },
-    [validateOnChange],
+    [],
   );
 
   const handleSubmit = useCallback(
@@ -136,14 +134,6 @@ const Form = ({ validateOnChange }) => {
       </button>
     </form>
   );
-};
-
-Form.propTypes = {
-  validateOnChange: PropTypes.bool,
-};
-
-Form.defaultProps = {
-  validateOnChange: false,
 };
 
 export default Form;
