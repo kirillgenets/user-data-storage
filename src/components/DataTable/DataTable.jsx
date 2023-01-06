@@ -23,6 +23,7 @@ const DataTable = () => {
   const [itemOffset, setItemOffset] = useState(0);
   const [search, setSearch] = useState('');
   const [itemToDelete, setItemToDelete] = useState(null);
+  const [isError, setIsError] = useState(false);
 
   const searchedCustomers = useMemo(() => filterData(customers, search), [customers, search]);
 
@@ -44,6 +45,7 @@ const DataTable = () => {
 
   const handleDeleteClick = (item) => () => {
     setItemToDelete(item);
+    setIsError(false);
   };
 
   const handleDeleteCancel = () => {
@@ -51,8 +53,13 @@ const DataTable = () => {
   };
 
   const handleDeleteSubmit = useCallback(() => {
-    dispatch(removeCustomer(itemToDelete));
-    setItemToDelete(null);
+    try {
+      dispatch(removeCustomer(itemToDelete));
+      setItemToDelete(null);
+    } catch (err) {
+      console.error(err);
+      setIsError(true);
+    }
   }, [dispatch, itemToDelete]);
 
   return customers.length > 0 ? (
@@ -93,7 +100,11 @@ const DataTable = () => {
       </table>
       <Pagination onPageChange={handlePageChange} pagesCount={pagesCount} />
       {itemToDelete && (
-        <ConfirmationModal onSubmit={handleDeleteSubmit} onCancel={handleDeleteCancel} />
+        <ConfirmationModal
+          onSubmit={handleDeleteSubmit}
+          onCancel={handleDeleteCancel}
+          error={isError ? 'Deletion has failed due to the unexpected reason' : ''}
+        />
       )}
     </div>
   ) : null;

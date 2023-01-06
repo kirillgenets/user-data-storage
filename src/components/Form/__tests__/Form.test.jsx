@@ -1,5 +1,6 @@
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
+import renderer from 'react-test-renderer';
 import { ADD_CUSTOMER } from '../../../actions/customers';
 import { FieldName } from '../../../constants';
 
@@ -17,7 +18,8 @@ describe('Form', () => {
         <Form />
       </Provider>,
     );
-    expect(component).toMatchSnapshot();
+    const tree = renderer.create(component);
+    expect(tree).toMatchSnapshot();
     expect(component.find('.form')).toHaveLength(1);
   });
 

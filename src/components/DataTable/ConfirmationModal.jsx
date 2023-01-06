@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 
-const ConfirmationModal = ({ onSubmit, onCancel }) => {
+const ConfirmationModal = ({ onSubmit, onCancel, error }) => {
   return (
     <Modal isOpen onRequestClose={onCancel} className="data-table__confirmation">
       <h3 className="data-table__confirmation-text">Are you sure?</h3>
@@ -19,6 +19,7 @@ const ConfirmationModal = ({ onSubmit, onCancel }) => {
           No
         </button>
       </div>
+      {error && <p className="data-table__confirmation-error">{error}</p>}
     </Modal>
   );
 };

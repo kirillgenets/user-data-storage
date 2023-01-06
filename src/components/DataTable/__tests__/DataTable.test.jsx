@@ -1,5 +1,6 @@
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
+import renderer from 'react-test-renderer';
 
 import configureMockStore from '../../../__testUtils__/configureMockStore';
 import { generateMockCustomers } from '../../../mock';
@@ -20,7 +21,8 @@ describe('DataTable', () => {
         <DataTable />
       </Provider>,
     );
-    expect(component).toMatchSnapshot();
+    const tree = renderer.create(component);
+    expect(tree).toMatchSnapshot();
     expect(component.find('.data-table')).toHaveLength(1);
   });
 

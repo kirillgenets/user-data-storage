@@ -29,6 +29,7 @@ const Form = () => {
   );
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
   const [, setIsError] = useState(false);
+  const [isFailedSubmission, setIsFailedSubmission] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -42,14 +43,19 @@ const Form = () => {
   const handleSubmit = useCallback(
     (evt) => {
       evt.preventDefault();
-      if (validatorRef.current.allValid()) {
-        dispatch(addCustomer(formData));
-        setFormData(DEFAULT_FORM_DATA);
-        validatorRef.current.hideMessages();
-        setIsError(false);
-      } else {
-        validatorRef.current.showMessages();
-        setIsError(true);
+      try {
+        if (validatorRef.current.allValid()) {
+          dispatch(addCustomer(formData));
+          setFormData(DEFAULT_FORM_DATA);
+          validatorRef.current.hideMessages();
+          setIsError(false);
+        } else {
+          validatorRef.current.showMessages();
+          setIsError(true);
+        }
+      } catch (err) {
+        console.error(err);
+        setIsFailedSubmission(true);
       }
     },
     [formData, dispatch],
@@ -133,6 +139,9 @@ const Form = () => {
           VALIDATION_RULES[FieldName.BirthDate],
         )}
       </div>
+      {isFailedSubmission && (
+        <p className="form__error">Your submission has failed due to the unexpected reason</p>
+      )}
       <button type="submit" className="form__submit">
         Submit
       </button>
