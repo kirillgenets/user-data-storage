@@ -9,6 +9,8 @@
 
 .data-table__search {
   width: 30%;
+  margin: 0 auto;
+  padding: 8px;
 }
 
 .data-table__table {
@@ -21,6 +23,15 @@
 
 .data-table__row--head {
   border-color: #a1a1a1;
+}
+
+.data-table__cell {
+  padding: 10px;
+  text-align: left;
+}
+
+.data-table__cell--head {
+  background-color: #ececec;
 }
 
 .data-table__confirmation {

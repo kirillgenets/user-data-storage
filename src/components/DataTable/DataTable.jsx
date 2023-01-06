@@ -55,7 +55,7 @@ const DataTable = () => {
     setItemToDelete(null);
   }, [dispatch, itemToDelete]);
 
-  return items.length > 0 ? (
+  return customers.length > 0 ? (
     <div className="data-table">
       <input
         type="search"
@@ -68,7 +68,9 @@ const DataTable = () => {
         <thead>
           <tr className="data-table__row data-table__row--head">
             {COLUMNS.map(({ name, key }) => (
-              <th key={key}>{name}</th>
+              <th className="data-table__cell data-table__cell--head" key={key}>
+                {name}
+              </th>
             ))}
           </tr>
         </thead>
@@ -76,9 +78,11 @@ const DataTable = () => {
           {items.map((item) => (
             <tr className="data-table__row" key={item[FieldName.Email]}>
               {COLUMNS.map(({ key }) => (
-                <td key={key}>{item[key]}</td>
+                <td className="data-table__cell" key={key}>
+                  {item[key]}
+                </td>
               ))}
-              <td>
+              <td className="data-table__cell">
                 <button className="data-table__delete" onClick={handleDeleteClick(item)}>
                   Delete
                 </button>
